@@ -1,29 +1,31 @@
-import express from 'express';
-import { RestliClient } from 'linkedin-api-client';
-import { config } from 'dotenv';
+import {Router,Request,Response} from 'express';
+import {post_to_li} from './platforms/li_post.js'
+import {twitter_client} from './platforms/twitter_post.js';
 
-//Load the .env file in ./config/.env to get apiKeys
-config({ path: './.config/.env' });
 // Create a router
-const router = express.Router();
-const restliClient = new RestliClient();
-// Load API Keys
-const twitterApiKey = process.env.TWITTER_API_KEY;
-const liApiKey = process.env.LI_API_KEY || '';
+const router = Router();
 
-// Define routes
-// Twitter API tweet endpoint: https://api.twitter.com/1.1/statuses/update.json
-router.get('/twitter', (req,res) => {
-  
-});
+// Endpoints to post to twitter
+//TODO: accept MD as input and convert to non-formatted text as Twitter is dumb and doesn't allow formatting in posts
+router.post('/twitter/tweet', (req: Request, res: Response) => {});
+router.get('/twitter/callback',(req:Request,res:Response) => {});
 
-// LinkedIn API tweet endpoint: https://api.linkedin.com/v2/ugcPosts
-router.get('/li', (req,res) => {
-});
+//Endpoints for surrealdb
+/// Endpoints for the User Table
+router.post('/db/user/create', (req:Request,res:Response) => {});
+router.get('/db/user/read', (req:Request,res:Response) => {});
+router.patch('/db/user/update', (req:Request,res:Response) => {});
+router.delete('/db/user/delete', (req:Request,res:Response) => {});
+/// Endpoints for the Account Table
+router.post('/db/account/create', (req:Request,res:Response) => {});
+router.get('/db/account/read', (req:Request,res:Response) => {});
+router.patch('/db/account/update', (req:Request,res:Response) => {});
+router.delete('/db/account/delete', (req:Request,res:Response) => {});
 
-// Route post to each enpoint
-router.get('/all', (req,res) => {
-  
+// Endpoint to post to linkedin
+//TODO: accept MD as input and convert to non-formatted text as LinkedIn is dumb and doesn't allow formatting in posts
+router.post('/linkedin/post', (req: Request, res: Response) => {
+  post_to_li().then(() => {console.log('Completed');}).catch((error) => {console.log(`Error encountered: ${error.message}`);});
 });
 
 // Export the router
