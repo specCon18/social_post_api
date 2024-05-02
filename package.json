@@ -3,13 +3,16 @@
   "main": "src/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js --env-file='.config/.env'"
   },
   "dependencies": {
     "@types/express": "^4.17.21",
-    "dotenv": "^16.4.5",
+    "axios": "^1.6.8",
+    "cron": "^3.1.7",
     "express": "^4.19.2",
-    "linkedin-api-client": "^0.3.0"
+    "linkedin-api-client": "^0.3.0",
+    "surrealdb.js": "^1.0.0-beta.5",
+    "twitter-api-v2": "^1.16.3"
   },
   "devDependencies": {}
 }
